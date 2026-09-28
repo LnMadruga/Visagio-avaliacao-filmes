@@ -1,0 +1,717 @@
+/* =============================================================================
+   Marquee — tokens de design
+   Paleta inspirada em cinemas de rua e créditos de abertura: preto quente de
+   sala escura, dourado de marquise/placa luminosa como cor de destaque e
+   uma serifada de exibição para os títulos dos filmes, contrastando com uma
+   grotesca contemporânea para a interface.
+   ============================================================================= */
+:root {
+  --color-bg: #0e0d0c;
+  --color-surface: #17151388;
+  --color-surface-solid: #1b1917;
+  --color-border: #2c2925;
+  --color-text: #f2efe9;
+  --color-text-muted: #a39a8b;
+  --color-accent: #e3b23c;
+  --color-accent-strong: #f4c65a;
+  --color-star-empty: #3a352d;
+  --color-danger: #c85c46;
+  --color-danger-strong: #e0745d;
+
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-ui: "Bricolage Grotesque", "Inter", system-ui, sans-serif;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --shadow-elevated: 0 24px 60px -24px rgba(0, 0, 0, 0.65);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100%;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 0 0 0.4em;
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  font-size: 2.6rem;
+}
+h2 {
+  font-size: 1.5rem;
+  color: var(--color-accent-strong);
+}
+h3 {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  text-transform: none;
+}
+
+p {
+  margin: 0 0 0.8em;
+  max-width: 68ch;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* =============================================================================
+   Layout geral
+   ============================================================================= */
+.app-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  padding: 1.4rem 2rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-header__brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+}
+
+.app-header__brand-subtitle {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+}
+
+.state-message {
+  color: var(--color-text-muted);
+  padding: 2rem 0;
+}
+
+.state-message--error {
+  color: var(--color-danger-strong);
+}
+
+/* =============================================================================
+   Botões e campos
+   ============================================================================= */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.button--primary {
+  background: var(--color-accent);
+  color: #1a1509;
+}
+.button--primary:hover:not(:disabled) {
+  background: var(--color-accent-strong);
+}
+
+.button--ghost {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+.button--ghost:hover:not(:disabled) {
+  border-color: var(--color-text-muted);
+}
+
+.button--danger {
+  background: transparent;
+  border-color: var(--color-danger);
+  color: var(--color-danger-strong);
+}
+.button--danger:hover:not(:disabled) {
+  background: var(--color-danger);
+  color: var(--color-text);
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  background: var(--color-surface-solid);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  padding: 0.6rem 0.75rem;
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--color-accent);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.field > span {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.field-error {
+  color: var(--color-danger-strong);
+  font-size: 0.85rem;
+  margin: -0.4rem 0 0.8rem;
+}
+
+/* =============================================================================
+   Catálogo
+   ============================================================================= */
+.catalog-page__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-field {
+  flex: 1 1 260px;
+}
+
+.catalog-page__toolbar select {
+  flex: 0 1 200px;
+}
+
+.catalog-page__toolbar .button {
+  margin-left: auto;
+}
+
+.catalog-page__count {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.4rem 1.1rem;
+  transition: opacity 0.15s ease;
+}
+
+.movie-grid--loading {
+  opacity: 0.55;
+}
+
+.movie-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.movie-card__poster-wrap {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface-solid);
+  border: 1px solid var(--color-border);
+}
+
+.movie-card__poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.movie-card:hover .movie-card__poster {
+  transform: scale(1.035);
+}
+
+.movie-card__badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgba(14, 13, 12, 0.82);
+  color: var(--color-accent-strong);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--radius-sm);
+}
+
+.movie-card__info {
+  padding-top: 0.6rem;
+}
+
+.movie-card__title {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin: 0 0 0.2rem;
+  line-height: 1.3;
+}
+
+.movie-card__meta {
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  margin: 0 0 0.35rem;
+}
+
+/* =============================================================================
+   Paginação
+   ============================================================================= */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+  margin: 2rem 0 1rem;
+}
+
+.pagination__button,
+.pagination__page {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.7rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.pagination__button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination__page--active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #1a1509;
+  font-weight: 700;
+}
+
+.pagination__ellipsis {
+  color: var(--color-text-muted);
+  padding: 0 0.2rem;
+}
+
+/* =============================================================================
+   Estrelas
+   ============================================================================= */
+.star-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.star-rating--empty {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.star-rating__stars {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.star-rating__value {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.star-rating__button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  line-height: 0;
+}
+
+/* =============================================================================
+   Detalhe do filme
+   ============================================================================= */
+.movie-detail__hero {
+  height: 320px;
+  background-size: cover;
+  background-position: center 25%;
+  -webkit-mask-image: linear-gradient(to bottom, black 45%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 45%, transparent 100%);
+}
+
+.movie-detail__content {
+  margin-top: -140px;
+}
+
+.movie-detail__header {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+}
+
+.movie-detail__poster {
+  width: 190px;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-elevated);
+  flex-shrink: 0;
+}
+
+.movie-detail__headline {
+  padding-bottom: 0.4rem;
+}
+
+.movie-detail__eyebrow {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+}
+
+.movie-detail__genres {
+  color: var(--color-text-muted);
+  margin-top: -0.3rem;
+}
+
+.movie-detail__rating {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.6rem 0 1rem;
+}
+
+.movie-detail__rating-count {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.movie-detail__actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.movie-detail__section {
+  border-top: 1px solid var(--color-border);
+  padding: 1.6rem 0;
+}
+
+.movie-detail__sinopse {
+  max-width: 72ch;
+  color: var(--color-text);
+}
+
+.movie-detail__credits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.2rem;
+}
+
+.movie-detail__credits p {
+  color: var(--color-text-muted);
+}
+
+.movie-detail__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.2rem;
+  margin: 0;
+}
+
+.movie-detail__stats dt {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.2rem;
+}
+
+.movie-detail__stats dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--color-accent-strong);
+}
+
+/* =============================================================================
+   Avaliações
+   ============================================================================= */
+.review-form {
+  background: var(--color-surface-solid);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.2rem;
+  margin-bottom: 1.6rem;
+  max-width: 640px;
+}
+
+.review-form__row {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.review-form__row .field {
+  flex: 1 1 220px;
+}
+
+.review-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 720px;
+}
+
+.review-item {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1rem;
+}
+
+.review-item__header {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.3rem;
+}
+
+.review-item p {
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* =============================================================================
+   Formulário de filme
+   ============================================================================= */
+.form-page {
+  max-width: 760px;
+}
+
+.movie-form__row {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.movie-form__row .field {
+  flex: 1 1 160px;
+}
+
+.genre-picker {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin: 0 0 1.2rem;
+}
+
+.genre-picker legend {
+  padding: 0 0.4rem;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+}
+
+.genre-picker__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.genre-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.genre-chip input {
+  width: auto;
+  accent-color: var(--color-accent);
+}
+
+.genre-picker__custom {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.genre-picker__selected {
+  margin: 0.7rem 0 0;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.movie-form__actions {
+  display: flex;
+  gap: 0.7rem;
+  justify-content: flex-end;
+  margin-top: 1.4rem;
+}
+
+/* =============================================================================
+   Diálogo de confirmação
+   ============================================================================= */
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 4, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 100;
+}
+
+.dialog {
+  background: var(--color-surface-solid);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.6rem;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: var(--shadow-elevated);
+}
+
+.dialog__description {
+  color: var(--color-text-muted);
+}
+
+.dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+}
+
+/* =============================================================================
+   Notificações (toast)
+   ============================================================================= */
+.toast-stack {
+  position: fixed;
+  bottom: 1.4rem;
+  right: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  z-index: 200;
+}
+
+.toast {
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  box-shadow: var(--shadow-elevated);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-solid);
+}
+
+.toast--success {
+  border-color: var(--color-accent);
+  color: var(--color-accent-strong);
+}
+
+.toast--error {
+  border-color: var(--color-danger);
+  color: var(--color-danger-strong);
+}
+
+/* =============================================================================
+   Responsivo
+   ============================================================================= */
+@media (max-width: 640px) {
+  .page {
+    padding: 1.2rem;
+  }
+  .movie-detail__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .movie-detail__poster {
+    width: 140px;
+  }
+  .movie-detail__content {
+    margin-top: -80px;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  .catalog-page__toolbar .button {
+    margin-left: 0;
+  }
+}

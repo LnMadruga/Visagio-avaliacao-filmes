@@ -1,0 +1,18 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.env
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+*.sqlite3
+
+# CSVs de dados (fornecidos separadamente pelo professor; não versionar —
+# alguns arquivos passam de 90MB e esbarram no limite de 100MB do GitHub)
+data/*.csv
